@@ -1,0 +1,35 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  padding: 40px;
+  text-align: center;
+  width: 320px;
+}
+
+.profile-card img {
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile-card button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.profile-card button:hover {
+  background: #4338ca;
+}

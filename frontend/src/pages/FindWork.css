@@ -1,0 +1,157 @@
+.findwork-page {
+  font-family: "Inter", sans-serif;
+  background-color: #f9fafc;
+  min-height: 100vh;
+}
+
+.findwork-header {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: white;
+  padding: 90px 20px 60px;
+  text-align: center;
+  border-radius: 0 0 50px 50px;
+}
+
+.findwork-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.findwork-header p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+.search-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.search-filters input,
+.search-filters select {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+.search-filters input {
+  width: 220px;
+}
+
+.projects-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 60px 40px;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  width: 340px;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-header h2 {
+  font-size: 1.3rem;
+  color: #1e3a8a;
+  margin-bottom: 5px;
+}
+
+.budget {
+  background: #dcfce7;
+  color: #166534;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.company {
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.desc {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.skill-tag {
+  background-color: #e0e7ff;
+  color: #1e40af;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-apply {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-apply:hover {
+  background-color: #1e3a8a;
+}
+
+.btn-view {
+  background: transparent;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-view:hover {
+  background-color: #2563eb;
+  color: white;
+}

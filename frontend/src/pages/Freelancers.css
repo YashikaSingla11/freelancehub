@@ -1,0 +1,129 @@
+.freelancers-page {
+  padding: 40px 20px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.freelancers-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.freelancers-header h1 {
+  font-size: 2.2rem;
+  color: #1e3a8a;
+}
+
+.freelancer-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.freelancer-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+}
+
+.freelancer-card:hover {
+  transform: translateY(-5px);
+}
+
+.freelancer-card h3 {
+  color: #1e3a8a;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.freelancer-card .role {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.freelancer-card .exp,
+.freelancer-card .email {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+.skills {
+  margin-top: 10px;
+}
+
+.skill-tag {
+  background-color: #e0e7ff;
+  color: #3730a3;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 3px;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.register-section {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn-register {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.btn-register:hover {
+  background-color: #1e40af;
+}
+
+.register-form {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.register-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-submit {
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-cancel {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}

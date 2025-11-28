@@ -1,0 +1,80 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background-color: #f8f9fc;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+button.primary {
+  background-color: #0d6efd;
+  color: white;
+  padding: 10px 20px;
+}
+
+button.primary:hover {
+  background-color: #0b5ed7;
+}
+
+/* Layout helper */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Responsive typography */
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+/* Simple fade animation */
+.fade-in {
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .container {
+    width: 95%;
+  }
+}

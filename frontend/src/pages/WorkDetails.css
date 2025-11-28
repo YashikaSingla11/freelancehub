@@ -1,0 +1,92 @@
+.workdetail-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background-color: #f8fafc;
+}
+
+.workdetail-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 600px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.workdetail-card h1 {
+  font-size: 2rem;
+  color: #1e3a8a;
+}
+
+.workdetail-card h3 {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.budget {
+  font-weight: bold;
+  color: #166534;
+  margin-bottom: 15px;
+}
+
+.desc {
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.details {
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.skill-tag {
+  background-color: #e0e7ff;
+  color: #1e40af;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-back {
+  background: transparent;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-apply {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-back:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-apply:hover {
+  background-color: #1e3a8a;
+}
