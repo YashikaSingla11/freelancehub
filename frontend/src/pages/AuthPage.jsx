@@ -14,9 +14,17 @@ export default function AuthPage() {
   });
 
   const navigate = useNavigate();
-  const { login, user } = useAuth();
+  const auth = useAuth();   // 👈 full context
+  const { login, user } = auth;
 
-  // ✅ FIXED useEffect
+  // ✅ DEBUG (VERY IMPORTANT)
+  useEffect(() => {
+    console.log("Auth context:", auth);
+    console.log("User:", user);
+    console.log("Login function:", login);
+  }, [auth, user, login]);
+
+  // ✅ SAFE REDIRECT
   useEffect(() => {
     if (user && window.location.pathname === "/") {
       navigate("/home");
@@ -50,14 +58,20 @@ export default function AuthPage() {
 
       if (response.ok) {
         if (isLogin) {
-          // ✅ CLEAN USER DATA
           const userData = {
             username: data.username,
             email: data.email
           };
 
-          login(userData);   // context + localStorage dono handle karega
-          navigate("/home"); // redirect
+          // ✅ SAFETY FIX
+          if (typeof login === "function") {
+            login(userData);
+            navigate("/home");
+          } else {
+            console.error("❌ Login function is NOT available!", login);
+            alert("Internal error: login function missing");
+          }
+
         } else {
           alert("Signup successful! Please login now.");
           setIsLogin(true);
