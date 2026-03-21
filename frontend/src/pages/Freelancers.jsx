@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Freelancers.css";
 
-const API = "http://localhost:8000/api";
+const API = `${import.meta.env.VITE_API_URL}/api`;
 
 const ROLES = [
   "Full Stack Developer", "Frontend Developer", "Backend Developer",

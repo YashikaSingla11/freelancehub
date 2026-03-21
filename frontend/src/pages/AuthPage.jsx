@@ -29,8 +29,8 @@ export default function AuthPage() {
     e.preventDefault();
 
     const endpoint = isLogin
-      ? "http://127.0.0.1:8000/api/login/"
-      : "http://127.0.0.1:8000/api/register/";
+`${import.meta.env.VITE_API_URL}/api/login/`
+`${import.meta.env.VITE_API_URL}/api/register/`
 
     const payload = isLogin
       ? { email: formData.email, password: formData.password }
