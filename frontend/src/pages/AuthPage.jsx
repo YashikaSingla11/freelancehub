@@ -16,8 +16,9 @@ export default function AuthPage() {
   const navigate = useNavigate();
   const { login, user } = useAuth();
 
+  // ✅ FIXED useEffect
   useEffect(() => {
-    if (user) {
+    if (user && window.location.pathname === "/") {
       navigate("/home");
     }
   }, [user, navigate]);
@@ -49,9 +50,14 @@ export default function AuthPage() {
 
       if (response.ok) {
         if (isLogin) {
-          login(data);
-          localStorage.setItem("user", JSON.stringify(data));
-          navigate("/home");
+          // ✅ CLEAN USER DATA
+          const userData = {
+            username: data.username,
+            email: data.email
+          };
+
+          login(userData);   // context + localStorage dono handle karega
+          navigate("/home"); // redirect
         } else {
           alert("Signup successful! Please login now.");
           setIsLogin(true);
