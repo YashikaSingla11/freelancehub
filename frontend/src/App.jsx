@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AuthPage from "./pages/AuthPage";
@@ -7,22 +7,22 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import FindWork from "./pages/FindWork";
 import WorkDetails from "./pages/WorkDetails";
+import { useAuth, AuthProvider } from "./contexts/AuthContext";
 
 function AppContent() {
-  const location = useLocation();
-  
-  // hide navbar on login/signup page
-  const hideNavbar = location.pathname === "/" || location.pathname === "/auth";
+  const { user } = useAuth();
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
+      {/* Navbar only visible if logged in */}
+      {user && <Navbar />}
+
       <Routes>
         <Route path="/" element={<AuthPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/freelancers" element={<Freelancers />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/findwork" element={<FindWork />} />
         <Route path="/work/:id" element={<WorkDetails />} />
       </Routes>
@@ -30,12 +30,12 @@ function AppContent() {
   );
 }
 
-function App() {
+export default function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </AuthProvider>
   );
 }
-
-export default App;

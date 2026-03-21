@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Auth.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,7 +10,16 @@ export default function AuthPage() {
     email: "",
     password: "",
   });
+
   const navigate = useNavigate();
+  const { login, user } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,19 +29,12 @@ export default function AuthPage() {
     e.preventDefault();
 
     const endpoint = isLogin
-      ? "http://127.0.0.1:8000/accounts/login/"
-      : "http://127.0.0.1:8000/accounts/register/";
+      ? "http://127.0.0.1:8000/api/login/"
+      : "http://127.0.0.1:8000/api/register/";
 
     const payload = isLogin
-      ? {
-          username_or_email: formData.email, // login with username OR email
-          password: formData.password,
-        }
-      : {
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        };
+      ? { email: formData.email, password: formData.password }
+      : { username: formData.username, email: formData.email, password: formData.password };
 
     try {
       const response = await fetch(endpoint, {
@@ -46,8 +49,9 @@ export default function AuthPage() {
       if (response.ok) {
         if (isLogin) {
           alert("Login successful!");
+          login(data);
           localStorage.setItem("user", JSON.stringify(data));
-          navigate("/"); // ✅ Redirect to homepage
+          navigate("/home");
         } else {
           alert("Signup successful! Please login now.");
           setIsLogin(true);
@@ -58,20 +62,16 @@ export default function AuthPage() {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Network error. Check if Django server is running.");
+      alert("Network error. Check Django server.");
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2 className="auth-title">
-          {isLogin ? "Welcome Back" : "Create Account"}
-        </h2>
+        <h2 className="auth-title">{isLogin ? "Welcome Back" : "Create Account"}</h2>
         <p className="auth-subtitle">
-          {isLogin
-            ? "Login to your FreelanceHub account"
-            : "Join FreelanceHub and start your journey"}
+          {isLogin ? "Login to your FreelanceHub account" : "Join FreelanceHub and start your journey"}
         </p>
 
         <form onSubmit={handleSubmit}>
@@ -90,15 +90,11 @@ export default function AuthPage() {
           )}
 
           <div className="form-group">
-            <label>{isLogin ? "Username or Email" : "Email"}</label>
+            <label>Email</label>
             <input
               type="text"
               name="email"
-              placeholder={
-                isLogin
-                  ? "Enter username or email"
-                  : "Enter your email address"
-              }
+              placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
               required
@@ -125,22 +121,14 @@ export default function AuthPage() {
             {isLogin ? (
               <>
                 Don’t have an account?{" "}
-                <button
-                  type="button"
-                  className="link-btn"
-                  onClick={() => setIsLogin(false)}
-                >
+                <button type="button" className="link-btn" onClick={() => setIsLogin(false)}>
                   Sign Up
                 </button>
               </>
             ) : (
               <>
                 Already have an account?{" "}
-                <button
-                  type="button"
-                  className="link-btn"
-                  onClick={() => setIsLogin(true)}
-                >
+                <button type="button" className="link-btn" onClick={() => setIsLogin(true)}>
                   Login
                 </button>
               </>

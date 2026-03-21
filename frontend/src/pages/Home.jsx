@@ -15,7 +15,7 @@ function Home() {
         </p>
         <div className="hero-buttons">
           <Link to="/freelancers" className="btn-primary">Find Talent</Link>
-          <Link to="/projects" className="btn-outline">Find Work</Link>
+          <Link to="/findwork" className="btn-outline">Find Work</Link>
         </div>
       </section>
 
