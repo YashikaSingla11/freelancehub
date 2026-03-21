@@ -1,9 +1,3 @@
-"""
-Django Settings — Production (Render)
-Yeh file aapki existing settings.py ko REPLACE karegi
-Apni SECRET_KEY aur EMAIL settings bharni hain
-"""
-
 from pathlib import Path
 import os
 import dj_database_url
@@ -11,18 +5,15 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ── Security ──
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '.onrender.com',       # Render ka domain
-    '.vercel.app',         # Agar frontend se request aaye
+    '.onrender.com',
 ]
 
-# ── Apps ──
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +29,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',   # Static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,8 +57,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# ── Database ──
-# Render pe PostgreSQL milega automatically
+# ── Database (Render pe PostgreSQL, local pe SQLite) ──
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3'),
@@ -75,7 +65,6 @@ DATABASES = {
     )
 }
 
-# ── Password Validation ──
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -83,13 +72,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ── Internationalization ──
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# ── Static Files (WhiteNoise) ──
+# ── Static Files ──
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -100,15 +88,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ── REST Framework ──
+# ── REST Framework (JWT nahi — basic auth) ──
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
 }
 
 # ── CORS ──
-# Frontend ka Vercel URL yahan dalo deploy hone ke baad
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
     default='http://localhost:5173'
