@@ -3,6 +3,8 @@ import "../styles/Auth.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
+const API_URL = "https://freelancehub-backend-xyuo.onrender.com";
+
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -27,10 +29,9 @@ export default function AuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ FIXED: ternary operator sahi hai ab
     const endpoint = isLogin
-      ? `${import.meta.env.VITE_API_URL}/api/login/`
-      : `${import.meta.env.VITE_API_URL}/api/register/`;
+      ? `${API_URL}/api/login/`
+      : `${API_URL}/api/register/`;
 
     const payload = isLogin
       ? { email: formData.email, password: formData.password }
@@ -61,7 +62,7 @@ export default function AuthPage() {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Network error. Check Django server.");
+      alert("Network error: " + error.message);
     }
   };
 
