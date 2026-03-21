@@ -9,12 +9,12 @@ import FindWork from "./pages/FindWork";
 import WorkDetails from "./pages/WorkDetails";
 import { useAuth, AuthProvider } from "./contexts/AuthContext";
 
+// 👇 AppContent (routes + navbar)
 function AppContent() {
   const { user } = useAuth();
 
   return (
     <>
-      {/* Navbar only visible if logged in */}
       {user && <Navbar />}
 
       <Routes>
@@ -30,12 +30,13 @@ function AppContent() {
   );
 }
 
+// 👇 FINAL EXPORT
 export default function App() {
   return (
-    <Router>
-  <AuthProvider>
-    <AppContent />
-  </AuthProvider>
-</Router>
+    <Router> {/* ✅ Router OUTSIDE */}
+      <AuthProvider> {/* ✅ Auth inside Router */}
+        <AppContent />
+      </AuthProvider>
+    </Router>
   );
 }

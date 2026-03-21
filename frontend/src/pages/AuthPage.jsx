@@ -13,20 +13,12 @@ export default function AuthPage() {
     password: "",
   });
 
-  const navigate = useNavigate();
-  const auth = useAuth();   // 👈 full context
-  const { login, user } = auth;
+  const navigate = useNavigate(); // ✅ MUST
+  const { login, user } = useAuth();
 
-  // ✅ DEBUG (VERY IMPORTANT)
+  // ✅ Redirect if already logged in
   useEffect(() => {
-    console.log("Auth context:", auth);
-    console.log("User:", user);
-    console.log("Login function:", login);
-  }, [auth, user, login]);
-
-  // ✅ SAFE REDIRECT
-  useEffect(() => {
-    if (user && window.location.pathname === "/") {
+    if (user) {
       navigate("/home");
     }
   }, [user, navigate]);
@@ -44,7 +36,11 @@ export default function AuthPage() {
 
     const payload = isLogin
       ? { email: formData.email, password: formData.password }
-      : { username: formData.username, email: formData.email, password: formData.password };
+      : {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        };
 
     try {
       const response = await fetch(endpoint, {
@@ -60,101 +56,71 @@ export default function AuthPage() {
         if (isLogin) {
           const userData = {
             username: data.username,
-            email: data.email
+            email: data.email,
           };
 
-          // ✅ SAFETY FIX
-          if (typeof login === "function") {
-            login(userData);
-            navigate("/home");
-          } else {
-            console.error("❌ Login function is NOT available!", login);
-            alert("Internal error: login function missing");
-          }
-
+          login(userData);   // ✅ store user
+          navigate("/home"); // ✅ redirect
         } else {
           alert("Signup successful! Please login now.");
           setIsLogin(true);
           setFormData({ username: "", email: "", password: "" });
         }
       } else {
-        alert(data.detail || "Invalid credentials, please try again.");
+        alert(data.detail || "Invalid credentials");
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("Network error: " + error.message);
+      console.error(error);
+      alert("Network error");
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2 className="auth-title">{isLogin ? "Welcome Back" : "Create Account"}</h2>
-        <p className="auth-subtitle">
-          {isLogin ? "Login to your FreelanceHub account" : "Join FreelanceHub and start your journey"}
-        </p>
+        <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
 
         <form onSubmit={handleSubmit}>
           {!isLogin && (
-            <div className="form-group">
-              <label>Username</label>
-              <input
-                type="text"
-                name="username"
-                placeholder="Enter username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          )}
-
-          <div className="form-group">
-            <label>Email</label>
             <input
               type="text"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
+              name="username"
+              placeholder="Username"
+              value={formData.username}
               onChange={handleChange}
               required
             />
-          </div>
+          )}
 
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
-          <button type="submit" className="auth-btn">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <button type="submit">
             {isLogin ? "Login" : "Sign Up"}
           </button>
-
-          <p className="auth-footer">
-            {isLogin ? (
-              <>
-                Don't have an account?{" "}
-                <button type="button" className="link-btn" onClick={() => setIsLogin(false)}>
-                  Sign Up
-                </button>
-              </>
-            ) : (
-              <>
-                Already have an account?{" "}
-                <button type="button" className="link-btn" onClick={() => setIsLogin(true)}>
-                  Login
-                </button>
-              </>
-            )}
-          </p>
         </form>
+
+        <p>
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
+          <button onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "Sign Up" : "Login"}
+          </button>
+        </p>
       </div>
     </div>
   );
