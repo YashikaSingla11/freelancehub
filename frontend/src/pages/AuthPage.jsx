@@ -14,7 +14,6 @@ export default function AuthPage() {
   const navigate = useNavigate();
   const { login, user } = useAuth();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       navigate("/home");
@@ -28,9 +27,10 @@ export default function AuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // ✅ FIXED: ternary operator sahi hai ab
     const endpoint = isLogin
-`${import.meta.env.VITE_API_URL}/api/login/`
-`${import.meta.env.VITE_API_URL}/api/register/`
+      ? `${import.meta.env.VITE_API_URL}/api/login/`
+      : `${import.meta.env.VITE_API_URL}/api/register/`;
 
     const payload = isLogin
       ? { email: formData.email, password: formData.password }
@@ -48,7 +48,6 @@ export default function AuthPage() {
 
       if (response.ok) {
         if (isLogin) {
-          alert("Login successful!");
           login(data);
           localStorage.setItem("user", JSON.stringify(data));
           navigate("/home");
@@ -120,7 +119,7 @@ export default function AuthPage() {
           <p className="auth-footer">
             {isLogin ? (
               <>
-                Don’t have an account?{" "}
+                Don't have an account?{" "}
                 <button type="button" className="link-btn" onClick={() => setIsLogin(false)}>
                   Sign Up
                 </button>
