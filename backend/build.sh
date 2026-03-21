@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
-# Render pe yeh script run hogi automatically
-
 set -o errexit
 
 pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 python manage.py migrate
+
+# ── Auto superuser banao (sirf agar exist na kare) ──
+python manage.py shell << 'EOF'
+from django.contrib.auth.models import User
+if not User.objects.filter(username='admin').exists():
+    User.objects.create_superuser('admin', 'admin@freelancehub.com', 'Admin@1234')
+    print("Superuser created: admin / Admin@1234")
+else:
+    print("Superuser already exists")
+EOF
