@@ -3,8 +3,7 @@ import "../styles/Auth.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-const API_URL = "https://freelancehub-backend-xyuo.onrender.com";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
