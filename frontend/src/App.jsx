@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AuthPage from "./pages/AuthPage";
@@ -7,18 +7,16 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import FindWork from "./pages/FindWork";
 import WorkDetails from "./pages/WorkDetails";
-import { useAuth, AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
-// 👇 AppContent (routes + navbar)
 function AppContent() {
   const { user } = useAuth();
 
   return (
     <>
       {user && <Navbar />}
-
       <Routes>
-        <Route path="/" element={<AuthPage />} />
+        <Route path="/" element={user ? <Navigate to="/home" /> : <AuthPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/freelancers" element={<Freelancers />} />
@@ -30,13 +28,12 @@ function AppContent() {
   );
 }
 
-// 👇 FINAL EXPORT
 export default function App() {
   return (
-    <Router> {/* ✅ Router OUTSIDE */}
-      <AuthProvider> {/* ✅ Auth inside Router */}
+    <AuthProvider>
+      <Router>
         <AppContent />
-      </AuthProvider>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
