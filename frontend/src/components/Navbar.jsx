@@ -4,31 +4,33 @@ import { useAuth } from "../contexts/AuthContext";
 import "./Navbar.css";
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const auth = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    logout();
+    if (auth && typeof auth.logout === "function") {
+      auth.logout();
+    }
     navigate("/");
     setMenuOpen(false);
   };
 
+  const user = auth?.user;
   const initials = user?.username
     ? user.username.slice(0, 2).toUpperCase()
     : "U";
 
   const links = [
-    { to: "/home",        label: "Home",        icon: "🏠" },
-    { to: "/freelancers", label: "Find Talent",  icon: "👥" },
-    { to: "/findwork",    label: "Find Work",    icon: "💼" },
-    { to: "/dashboard",   label: "Dashboard",   icon: "📊" },
+    { to: "/home",        label: "Home",       icon: "🏠" },
+    { to: "/freelancers", label: "Find Talent", icon: "👥" },
+    { to: "/findwork",    label: "Find Work",   icon: "💼" },
+    { to: "/dashboard",   label: "Dashboard",  icon: "📊" },
   ];
 
   return (
     <>
       <nav className="navbar">
-        {/* Logo */}
         <NavLink to="/home" className="navbar-logo">
           <div className="logo-icon">F</div>
           <span className="logo-text">
@@ -36,7 +38,6 @@ export default function Navbar() {
           </span>
         </NavLink>
 
-        {/* Desktop Links */}
         <ul className="navbar-links">
           {links.map((l) => (
             <li key={l.to}>
@@ -51,7 +52,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Right — user + logout */}
         <div className="navbar-right">
           {user && (
             <div className="navbar-user">
@@ -62,8 +62,6 @@ export default function Navbar() {
           <button className="btn-logout" onClick={handleLogout}>
             Logout
           </button>
-
-          {/* Hamburger */}
           <button
             className="hamburger"
             onClick={() => setMenuOpen((p) => !p)}
@@ -76,7 +74,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile dropdown */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         {links.map((l) => (
           <NavLink
