@@ -11,7 +11,6 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 function AppContent() {
   const { user } = useAuth();
-
   return (
     <>
       {user && <Navbar />}
