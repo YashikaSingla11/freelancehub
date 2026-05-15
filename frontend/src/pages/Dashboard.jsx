@@ -1,12 +1,16 @@
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import './Dashboard.css';
 
 export default function Dashboard() {
+  const { user } = useAuth();
+  const name = user?.username || user?.email?.split('@')[0] || 'User';
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1>Welcome Back, Yashika!</h1>
-        <p>Here’s an overview of your freelance activity</p>
+        <h1>Welcome Back, {name}! 👋</h1>
+        <p>Here's an overview of your freelance activity</p>
       </header>
 
       <section className="stats-section">
