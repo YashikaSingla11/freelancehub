@@ -22,6 +22,7 @@ export default function Navbar() {
     { to: "/home",        label: "Home",        icon: "🏠" },
     { to: "/freelancers", label: "Find Talent",  icon: "👥" },
     { to: "/findwork",    label: "Find Work",    icon: "💼" },
+    { to: "/upload-project", label: "Upload Project", icon: "⬆️",className:"btn-navbar" },
     { to: "/dashboard",   label: "Dashboard",   icon: "📊" },
   ];
 
